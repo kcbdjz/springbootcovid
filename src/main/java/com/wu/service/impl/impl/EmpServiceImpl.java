@@ -43,6 +43,9 @@ public class EmpServiceImpl implements EmpService {
     @Override
     public int insert(HealthCheckIn emp) {
         try {
+            if(emp.getSex().equals("男")){
+                emp.setSex("1");
+            }else emp.setSex("0");
             empMapper.insert(emp);
         }catch (Exception exception){
             return 0;
