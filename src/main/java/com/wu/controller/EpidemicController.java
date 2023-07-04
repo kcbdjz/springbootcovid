@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/empiden")
-public class EmpIdenController {
+public class EpidemicController {
 
     @Autowired
     EpidemicService epidemicService;
