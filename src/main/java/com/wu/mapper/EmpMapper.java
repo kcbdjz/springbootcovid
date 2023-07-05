@@ -24,15 +24,6 @@ public interface EmpMapper {
     @Delete("DELETE from health_check_in WHERE id = #{id} ")
     void deleteById(long id);
 
-    @Select("select * from health_check_in where #{searchkey} = #{stext}")
+    @Select("select * from health_check_in where ${searchkey} = #{stext}")
     List<HealthCheckIn> search(String searchkey, String stext);
-
-    @Select("select * from health_check_in where name = #{stext}")
-    List<HealthCheckIn> selectByName(String stext);
-
-    @Select("select * from health_check_in where createTime = #{stext}")
-    List<HealthCheckIn> selectByCreateTime(String stext);
-
-    @Select("select * from health_check_in where health = #{stext}")
-    List<HealthCheckIn> selectByHealth(String stext);
 }

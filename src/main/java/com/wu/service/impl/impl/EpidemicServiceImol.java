@@ -1,9 +1,7 @@
 package com.wu.service.impl.impl;
 
 import com.wu.mapper.EpidemicMapper;
-import com.wu.pojo.Epidemic;
-import com.wu.pojo.HealthCheckIn;
-import com.wu.pojo.PageBean;
+import com.wu.pojo.*;
 import com.wu.service.impl.EpidemicService;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +46,49 @@ public class EpidemicServiceImol implements EpidemicService {
             return 0;
         }
         return 1;
+    }
+
+    @Override
+    public LineVO lineVOList() {
+        LineVO lineVOList ;
+        List<VO> voList= epidemicMapper.lineVOList();
+        System.out.println(voList);
+        String [] strings = new String[13];
+        String [] [] strings1 = new String[13][5];
+        for (int i = 6; i >= 0; i--) {
+
+        }
+//        1.把月份求出放到数组；
+//        2.把健康状态放到数组；
+//        3.封装
+        return null;
+    }
+
+    @Override
+    public Epidemic selectById(Integer id) {
+        return epidemicMapper.selectById(id);
+    }
+
+    @Override
+    public int updateById(Epidemic empIden) {
+        try {
+            if(empIden.getSex().equals("男")){
+                empIden.setSex("1");
+            }else empIden.setSex("0");
+            epidemicMapper.updateById(empIden);
+        }catch (Exception exception){
+            return 0;
+        }
+        return 1;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        epidemicMapper.deleteById(id);
+    }
+
+    @Override
+    public List<Epidemic> search(String searchkey, String stext) {
+        return epidemicMapper.search( searchkey,  stext);
     }
 }
