@@ -1,7 +1,6 @@
 package com.wu.controller;
 
-import com.wu.pojo.HealthCheckIn;
-import com.wu.pojo.MaterialManage;
+import com.wu.pojo.Material;
 import com.wu.pojo.PageBean;
 import com.wu.pojo.Result;
 import com.wu.service.impl.MaterialService;
@@ -24,26 +23,28 @@ public class MaterialController {
 
 
     @PostMapping("/save")
-    public String save(@RequestBody MaterialManage emp){
+    public String save(@RequestBody Material emp) {
         int result = materialService.insert(emp);
-        if (result==1){
+        if (result == 1) {
             return "success";
-        }else {
+        } else {
             return "error";
         }
     }
 
     @GetMapping("/findById/{id}")
-    public MaterialManage findById(@PathVariable("id") Integer id){
-        return materialService.selectById(id);
+    public Result findById(@PathVariable("id") Integer id) {
+        Material material = materialService.selectById(id);
+        return Result.success(material);
+//        return materialService.selectById(id);
     }
 
     @PutMapping("/update")
-    public String update(@RequestBody MaterialManage emp){
-        int result=materialService.updateById(emp);
-        if (result==1){
+    public String update(@RequestBody Material emp) {
+        int result = materialService.updateById(emp);
+        if (result == 1) {
             return "success";
-        }else {
+        } else {
             return "error";
         }
     }
@@ -54,8 +55,8 @@ public class MaterialController {
     }
 
     @GetMapping("/search/{searchkey}/{stext}")
-    public List<MaterialManage> search(@PathVariable("searchkey")String searchkey, @PathVariable("stext")String stext){
-        List<MaterialManage> empList = materialService.search(searchkey,stext);
-        return empList;
+    public Result search(@PathVariable("searchkey") String searchkey, @PathVariable("stext") String stext) {
+        List<Material> empList = materialService.search(searchkey, stext);
+        return Result.success(empList);
     }
 }

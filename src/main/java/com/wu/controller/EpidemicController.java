@@ -33,16 +33,18 @@ public class EpidemicController {
     }
 
     @GetMapping("/LineVO")
-    public LineVO getLineVO(){
-        return epidemicService.lineVOList();
+    public Result getLineVO() {
+        return Result.success(epidemicService.lineVOList());
     }
+
     @GetMapping("/PieVO")
-    public List<PieVo> getPieVO(){
-        return this.epidemicService.pieVOMap();
+    public Result getPieVO() {
+        return Result.success(epidemicService.pieVOMap());
     }
+
     @GetMapping("/findById/{id}")
-    public Epidemic findById(@PathVariable("id") Integer id){
-        return epidemicService.selectById(id);
+    public Result findById(@PathVariable("id") Integer id) {
+        return Result.success(epidemicService.selectById(id));
     }
 
     @PutMapping("/update")
@@ -62,8 +64,8 @@ public class EpidemicController {
     }
 
     @GetMapping("/search/{searchkey}/{stext}")
-    public List<Epidemic> search(@PathVariable("searchkey")String searchkey, @PathVariable("stext")String stext){
-        return epidemicService.search(searchkey,stext);
+    public Result search(@PathVariable("searchkey") String searchkey, @PathVariable("stext") String stext) {
+        return Result.success(epidemicService.search(searchkey, stext));
     }
 }
 

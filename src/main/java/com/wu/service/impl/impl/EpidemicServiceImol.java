@@ -3,7 +3,6 @@ package com.wu.service.impl.impl;
 import com.wu.mapper.EpidemicMapper;
 import com.wu.pojo.*;
 import com.wu.service.impl.EpidemicService;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -126,9 +125,9 @@ public class EpidemicServiceImol implements EpidemicService {
     @Override
     public List<PieVo> pieVOMap() {
         List<PieVo> pielist = new ArrayList<>();
-        List<MaterialManage> list=epidemicMapper.selectList();
-        for (MaterialManage mat:list){
-            PieVo pieVo=new PieVo();
+        List<Material> list = epidemicMapper.selectList();
+        for (Material mat : list) {
+            PieVo pieVo = new PieVo();
             pieVo.setName(mat.getName());
             pieVo.setValue(mat.getCount());
             pielist.add(pieVo);

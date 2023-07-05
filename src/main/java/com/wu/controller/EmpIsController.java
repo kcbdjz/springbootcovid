@@ -45,15 +45,16 @@ public class EmpIsController {
     }
 
     @GetMapping("/findById/{id}")
-    public EmpIs findById(@PathVariable("id") Integer id){
-        return empIsService.selectById(id);
+    public Result findById(@PathVariable("id") Integer id) {
+        return Result.success(empIsService.selectById(id));
     }
+
     @PutMapping("/update")
-    public String update(@RequestBody EmpIs emp){
-        int result=empIsService.updateById(emp);
-        if (result==1){
+    public String update(@RequestBody EmpIs emp) {
+        int result = empIsService.updateById(emp);
+        if (result == 1) {
             return "success";
-        }else {
+        } else {
             return "error";
         }
     }
@@ -64,8 +65,8 @@ public class EmpIsController {
     }
 
     @GetMapping("/search/{searchkey}/{stext}")
-    public List<EmpIs> search(@PathVariable("searchkey")String searchkey, @PathVariable("stext")String stext){
-        List<EmpIs> empList = empIsService.search(searchkey,stext);
-        return empList;
+    public Result search(@PathVariable("searchkey") String searchkey, @PathVariable("stext") String stext) {
+        List<EmpIs> empList = empIsService.search(searchkey, stext);
+        return Result.success(empList);
     }
 }

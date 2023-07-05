@@ -11,5 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 public class PageBean {
     private long total;
-    private List rows;
+    private List records;
 }

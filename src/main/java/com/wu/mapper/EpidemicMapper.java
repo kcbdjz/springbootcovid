@@ -1,8 +1,7 @@
 package com.wu.mapper;
 
 import com.wu.pojo.Epidemic;
-import com.wu.pojo.HealthCheckIn;
-import com.wu.pojo.MaterialManage;
+import com.wu.pojo.Material;
 import com.wu.pojo.VO;
 import org.apache.ibatis.annotations.*;
 
@@ -35,5 +34,5 @@ public interface EpidemicMapper {
     List<Epidemic> search(String searchkey, String stext);
 
     @Select("select * from material_manage")
-    List<MaterialManage> selectList();
+    List<Material> selectList();
 }

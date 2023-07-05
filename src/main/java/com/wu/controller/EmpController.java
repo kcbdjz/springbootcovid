@@ -35,8 +35,8 @@ public class EmpController {
     }
 
     @GetMapping("/findById/{id}")
-    public HealthCheckIn findById(@PathVariable("id") Integer id){
-        return empService.selectById(id);
+    public Result findById(@PathVariable("id") Integer id) {
+        return Result.success(empService.selectById(id));
     }
 
     @PutMapping("/update")
@@ -55,8 +55,8 @@ public class EmpController {
     }
 
     @GetMapping("/search/{searchkey}/{stext}")
-    public List<HealthCheckIn> search(@PathVariable("searchkey")String searchkey, @PathVariable("stext")String stext){
-        List<HealthCheckIn> empList = empService.search(searchkey,stext);
-        return empList;
+    public Result search(@PathVariable("searchkey") String searchkey, @PathVariable("stext") String stext) {
+        List<HealthCheckIn> empList = empService.search(searchkey, stext);
+        return Result.success(empList);
     }
 }

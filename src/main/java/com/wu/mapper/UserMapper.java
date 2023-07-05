@@ -9,9 +9,12 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
-    @Select("select * from user")
-    List<User> listUser();
+    @Select("select * from user where username=#{username}")
+    List<User> selectUser(String username);
 
-    @Insert("INSERT into user(username , password , depart) values (#{username},#{password},#{depart})")
+    @Select("select count(*) from user where username=#{username}")
+    Integer findUsername(String username);
+
+    @Insert("INSERT into user values (null,#{username},#{password},#{depart},#{isAdministrator})")
     void insertUser(User reUser);
 }
