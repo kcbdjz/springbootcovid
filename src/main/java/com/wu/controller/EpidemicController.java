@@ -1,10 +1,7 @@
 package com.wu.controller;
 
 
-import com.wu.pojo.Epidemic;
-import com.wu.pojo.LineVO;
-import com.wu.pojo.PageBean;
-import com.wu.pojo.Result;
+import com.wu.pojo.*;
 import com.wu.service.impl.EpidemicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,14 +32,14 @@ public class EpidemicController {
         }
     }
 
-//    @GetMapping("/LineVO")
-//    public LineVO getLineVO(){
-//        return this.epidemicService.lineVOList();
-//    }
-//    @GetMapping("/PieVO")
-//    public List<PieVo> getPieVO(){
-//        return this.chartService.pieVOMap();
-//    }
+    @GetMapping("/LineVO")
+    public LineVO getLineVO(){
+        return epidemicService.lineVOList();
+    }
+    @GetMapping("/PieVO")
+    public List<PieVo> getPieVO(){
+        return this.epidemicService.pieVOMap();
+    }
     @GetMapping("/findById/{id}")
     public Epidemic findById(@PathVariable("id") Integer id){
         return epidemicService.selectById(id);

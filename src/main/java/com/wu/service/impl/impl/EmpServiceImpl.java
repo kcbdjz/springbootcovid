@@ -42,6 +42,7 @@ public class EmpServiceImpl implements EmpService {
 
     @Override
     public int insert(HealthCheckIn emp) {
+        emp.setCreateTime(new Date());
         try {
             if(emp.getSex().equals("男")){
                 emp.setSex("1");

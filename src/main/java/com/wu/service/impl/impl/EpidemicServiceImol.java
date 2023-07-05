@@ -7,7 +7,8 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class EpidemicServiceImol implements EpidemicService {
@@ -37,6 +38,7 @@ public class EpidemicServiceImol implements EpidemicService {
 
     @Override
     public int insert(Epidemic emp) {
+        emp.setRegister(new Date());
         try {
             if(emp.getSex().equals("男")){
                 emp.setSex("1");
@@ -50,18 +52,47 @@ public class EpidemicServiceImol implements EpidemicService {
 
     @Override
     public LineVO lineVOList() {
-        LineVO lineVOList ;
+        LineVO lineVOList = new LineVO();
         List<VO> voList= epidemicMapper.lineVOList();
-        System.out.println(voList);
-        String [] strings = new String[13];
-        String [] [] strings1 = new String[13][5];
-        for (int i = 6; i >= 0; i--) {
-
+        Map<String,List> map = new HashMap<>();
+        String [] strings = {"确诊","治愈","疑似","隔离","死亡"};
+        for (int i = 0; i < 5; i++) {
+            map.put(strings[i],new ArrayList<>());
+            for (int j = 0; j < 7; j++) {
+                map.get(strings[i]).add(0);
+            }
         }
 //        1.把月份求出放到数组；
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
+        List list = new ArrayList();
+        Date d1 ;
+        Calendar rightNow = Calendar.getInstance();
+        for (int i = 7; i > 0; i--) {
+            d1 = rightNow.getTime();
+            list.add(0,simpleDateFormat.format(d1));
+            rightNow.add(Calendar.MONTH,-1);
+        }
 //        2.把健康状态放到数组；
+        for (VO vo : voList) {
+            String s = simpleDateFormat.format(vo.getIdate());
+            for (int i = 0; i < 7; i++) {
+                if (s.equals(list.get(i))){
+                    for (int j = 0; j < 5; j++) {
+                        if (vo.getStatus().equals(strings[j]))
+                        {
+                            int temp = (int)map.get(strings[j]).get(i);
+                            map.get(strings[j]).set(i,temp+1);
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
 //        3.封装
-        return null;
+        lineVOList.setMonth(list);
+        lineVOList.setStatus(map);
+        return lineVOList;
     }
 
     @Override
@@ -90,5 +121,18 @@ public class EpidemicServiceImol implements EpidemicService {
     @Override
     public List<Epidemic> search(String searchkey, String stext) {
         return epidemicMapper.search( searchkey,  stext);
+    }
+
+    @Override
+    public List<PieVo> pieVOMap() {
+        List<PieVo> pielist = new ArrayList<>();
+        List<MaterialManage> list=epidemicMapper.selectList();
+        for (MaterialManage mat:list){
+            PieVo pieVo=new PieVo();
+            pieVo.setName(mat.getName());
+            pieVo.setValue(mat.getCount());
+            pielist.add(pieVo);
+        }
+        return pielist;
     }
 }
