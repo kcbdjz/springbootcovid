@@ -19,7 +19,7 @@ public class Epidemic {
     private String depart;
     private Long phonenum;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
-    private Date register = new Date();
+    private Date register ;
 
 }
 

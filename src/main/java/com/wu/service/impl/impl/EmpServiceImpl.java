@@ -42,6 +42,7 @@ public class EmpServiceImpl implements EmpService {
 
     @Override
     public int insert(HealthCheckIn emp) {
+        emp.setCreateTime(new Date());
         try {
             if(emp.getSex().equals("男")){
                 emp.setSex("1");
@@ -77,14 +78,6 @@ public class EmpServiceImpl implements EmpService {
 
     @Override
     public List<HealthCheckIn> search(String searchkey, String stext) {
-        List<HealthCheckIn> empList = null;
-        if (searchkey.equals("name")){
-            empList = empMapper.selectByName(stext);
-        }else if (searchkey.equals("createTime")){
-            empList = empMapper.selectByCreateTime(stext);
-        }else if (searchkey.equals("health")){
-            empList = empMapper.selectByHealth(stext);
-        }
-        return empList;
+        return empMapper.search( searchkey,  stext) ;
     }
 }
