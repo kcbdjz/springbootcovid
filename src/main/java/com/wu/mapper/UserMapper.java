@@ -1,9 +1,9 @@
 package com.wu.mapper;
 
+
+import com.wu.pojo.HealthCheckIn;
 import com.wu.pojo.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -16,5 +16,14 @@ public interface UserMapper {
     Integer findUsername(String username);
 
     @Insert("INSERT into user values (null,#{username},#{password},#{depart},#{isAdministrator})")
-    void insertUser(User reUser);
+    void insert(User reUser);
+
+    @Select("select * from user where id = #{id}")
+    User selectById(Integer id);
+
+    @Update("UPDATE user  SET username = #{username} , password = #{password} , depart = #{depart} , is_administrator = #{isAdministrator} WHERE id = #{id}")
+    void updateById(User emp);
+
+    @Delete("DELETE from user WHERE id = #{id} ")
+    void deleteById(long id);
 }

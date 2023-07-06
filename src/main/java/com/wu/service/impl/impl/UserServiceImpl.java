@@ -1,6 +1,7 @@
 package com.wu.service.impl.impl;
 
 import com.wu.mapper.UserMapper;
+import com.wu.pojo.HealthCheckIn;
 import com.wu.pojo.User;
 import com.wu.service.impl.UserService;
 import com.wu.utils.MD5Util;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -43,7 +45,7 @@ public class UserServiceImpl implements UserService {
                 String pw = MD5Util.convertMD5(reUser.getPassword());
 //                String pw=DigestUtils.md5DigestAsHex(user.getPassword().getBytes());
                 reUser.setPassword(pw);
-                userMapper.insertUser(reUser);
+                userMapper.insert(reUser);
                 return "success";
             }
         } else return "error";
@@ -51,5 +53,26 @@ public class UserServiceImpl implements UserService {
 
     }
 
+
+    @Override
+    public User selectById(Integer id) {
+        User emp = userMapper.selectById(id);
+        return emp;
+    }
+
+    @Override
+    public int updateById(User emp) {
+        try {
+            userMapper.updateById(emp);
+        }catch (Exception exception){
+            return 0;
+        }
+        return 1;
+    }
+
+    @Override
+    public void deleteById(long id) {
+        userMapper.deleteById(id);
+    }
 
 }

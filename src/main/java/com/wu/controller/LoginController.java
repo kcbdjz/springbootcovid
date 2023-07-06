@@ -4,10 +4,8 @@ import com.wu.mapper.UserMapper;
 import com.wu.pojo.User;
 import com.wu.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import com.wu.utils.MD5Util;
 
 import java.util.List;
 
@@ -39,5 +37,53 @@ public class LoginController {
     public String register(@RequestBody User reUser){
         String message=userService.register(reUser);
         return message;
+    }
+//    @GetMapping("/list")
+//    public Page<User> findAll(){
+//        /*Page<User> page1= new Page<>(1,100);
+//        Page<User> result0=mapper.selectPage(page1,null*//*,wrapper*//*);*/
+//        List<User> records = mapper.selectList(null);
+//        for (int i = 0; i < records.size(); i++) {
+//            records.get(i).setPassword(MD5Util.convertMD5(records.get(i).getPassword()));
+//        }
+//        Page<User> result = new Page<User>();
+//        result.setRecords(records);
+//
+//        return result;
+//    }
+
+    @GetMapping("/selectById/{id}")
+    public User findById(@PathVariable("id") Integer id){
+        User user = userService.selectById(id);
+//        user.setPassword(DigestUtils.digestAsHexString(user.getPassword()));
+        user.setPassword(MD5Util.convertMD5(user.getPassword()));
+        return user;
+    }
+
+    @DeleteMapping("/deleteById/{id}")
+    public void deleteById(@PathVariable("id")Long id){
+        userService.deleteById(id);
+    }
+
+    @PostMapping("/update")
+    public String update(@RequestBody User user){
+        //密码加密存储
+//        user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
+        user.setPassword(MD5Util.convertMD5(user.getPassword()));
+        int result=userService.updateById(user);
+        //密码加密
+//        String password= DigestUtils.md5DigestAsHex(user.getPassword().getBytes());
+        if (result==1){
+            return "success";
+        }else {
+            return "error";
+        }
+    }
+
+    @PostMapping("/save")
+    public String save(@RequestBody User user){
+//        user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
+        String result = userService.register(user);
+            return result;
     }
 }
