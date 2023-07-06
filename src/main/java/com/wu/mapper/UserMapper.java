@@ -26,4 +26,7 @@ public interface UserMapper {
 
     @Delete("DELETE from user WHERE id = #{id} ")
     void deleteById(long id);
+
+    @Select("SELECT * from user")
+    List<User> selectList();
 }
