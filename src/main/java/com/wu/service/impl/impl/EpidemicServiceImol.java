@@ -62,7 +62,7 @@ public class EpidemicServiceImol implements EpidemicService {
                 map.get(strings[i]).add(0);
             }
         }
-//        1.把月份求出放到数组；
+//        1.把月份求出放到集合；
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
         List list = new ArrayList();
         Date d1 ;
@@ -72,7 +72,7 @@ public class EpidemicServiceImol implements EpidemicService {
             list.add(0,simpleDateFormat.format(d1));
             rightNow.add(Calendar.MONTH,-1);
         }
-//        2.把健康状态放到数组；
+//        2.把健康状态放到集合；
         for (VO vo : voList) {
             String s = simpleDateFormat.format(vo.getIdate());
             for (int i = 0; i < 7; i++) {
