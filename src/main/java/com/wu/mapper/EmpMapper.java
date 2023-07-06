@@ -21,7 +21,7 @@ public interface EmpMapper {
     @Delete("DELETE from health_check_in WHERE id = #{id} ")
     void deleteById(long id);
 
-    @Select("select * from health_check_in where ${searchkey} = #{stext}")
+    @Select("select * from health_check_in where ${searchkey} like CONCAT('%',#{stext},'%')")
     List<HealthCheckIn> search(String searchkey, String stext);
 
     @Select("select * from health_check_in")

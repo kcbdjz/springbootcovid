@@ -34,23 +34,6 @@ public class EmpIsServiceImpl implements EmpIsService {
         //封装到PageBean
         PageBean pageBean = new PageBean(p.getTotal(), p.getResult());
         return pageBean;
-
-/*//      计算信息总数；
-        long count = empIsMapper.count();
-
-//        获取结果列表
-        Integer start = page*size;
-        List<EmpIs> list = empIsMapper.findAll(start,size);
-        for (EmpIs i : list) {
-            if (i.getSex().equals("1")){
-                i.setSex("男");
-            }else i.setSex("女");
-        }
-
-//        封装进pageBeam
-        PageBean pageBean = new PageBean(count,list);
-
-        return pageBean;*/
     }
 
     @Override
@@ -68,14 +51,26 @@ public class EmpIsServiceImpl implements EmpIsService {
 
     @Override
     public EmpIs selectById(Integer id) {
-        return empIsMapper.selectById(id);
+        EmpIs empIs = empIsMapper.selectById(id);
+        if ("1".equals(empIs.getSex())) {
+            empIs.setSex("男");
+        } else {
+            empIs.setSex("女");
+        }
+
+        return empIs;
     }
 
     @Override
-    public int updateById(EmpIs emp) {
+    public int updateById(EmpIs empIs) {
         try {
-            empIsMapper.updateById(emp);
-        }catch (Exception exception){
+            if ("男".equals(empIs.getSex())) {
+                empIs.setSex("1");
+            } else {
+                empIs.setSex("0");
+            }
+            empIsMapper.updateById(empIs);
+        } catch (Exception exception) {
             return 0;
         }
         return 1;
@@ -88,6 +83,12 @@ public class EmpIsServiceImpl implements EmpIsService {
 
     @Override
     public List<EmpIs> search(String searchkey, String stext) {
-        return empIsMapper.search( searchkey,  stext) ;
+        List<EmpIs> search = empIsMapper.search(searchkey, stext);
+        for (EmpIs i : search) {
+            if ("1".equals(i.getSex())) {
+                i.setSex("男");
+            } else i.setSex("女");
+        }
+        return search;
     }
 }

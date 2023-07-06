@@ -29,6 +29,13 @@ public class EmpServiceImpl implements EmpService {
 
         //查询
         List<HealthCheckIn> empList = empMapper.list();
+        for (HealthCheckIn h : empList) {
+            if ("1".equals(h.getSex())) {
+                h.setSex("男");
+            } else {
+                h.setSex("女");
+            }
+        }
         Page<HealthCheckIn> p = (Page<HealthCheckIn>) empList;
         //封装到PageBean
         PageBean pageBean = new PageBean(p.getTotal(), p.getResult());
@@ -52,6 +59,11 @@ public class EmpServiceImpl implements EmpService {
     @Override
     public HealthCheckIn selectById(Integer id) {
         HealthCheckIn emp = empMapper.selectById(id);
+        if ("1".equals(emp.getSex())) {
+            emp.setSex("男");
+        } else {
+            emp.setSex("女");
+        }
         return emp;
     }
 
@@ -59,6 +71,9 @@ public class EmpServiceImpl implements EmpService {
     public int updateById(HealthCheckIn emp) {
 
         try {
+            if (emp.getSex().equals("男")) {
+                emp.setSex("1");
+            } else emp.setSex("0");
             empMapper.updateById(emp);
         }catch (Exception exception){
             return 0;
@@ -73,6 +88,14 @@ public class EmpServiceImpl implements EmpService {
 
     @Override
     public List<HealthCheckIn> search(String searchkey, String stext) {
-        return empMapper.search( searchkey,  stext) ;
+        List<HealthCheckIn> empList = empMapper.search(searchkey, stext);
+        for (HealthCheckIn h : empList) {
+            if ("1".equals(h.getSex())) {
+                h.setSex("男");
+            } else {
+                h.setSex("女");
+            }
+        }
+        return empList;
     }
 }

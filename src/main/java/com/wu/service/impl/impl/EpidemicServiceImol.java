@@ -34,22 +34,6 @@ public class EpidemicServiceImol implements EpidemicService {
         //封装到PageBean
         PageBean pageBean = new PageBean(p.getTotal(), p.getResult());
         return pageBean;
-
-        /*//      计算信息总数；
-        long count = epidemicMapper.count();
-
-        //        获取结果列表
-        Integer start = page * size;
-        List<Epidemic> list = epidemicMapper.findAll(start, size);
-        for (Epidemic i : list) {
-            if (i.getSex().equals("1")) {
-                i.setSex("男");
-            } else i.setSex("女");
-        }
-        //        封装进pageBeam
-        PageBean pageBean = new PageBean(count,list);
-
-        return pageBean;*/
     }
 
     @Override
@@ -113,7 +97,12 @@ public class EpidemicServiceImol implements EpidemicService {
 
     @Override
     public Epidemic selectById(Integer id) {
-        return epidemicMapper.selectById(id);
+        Epidemic e = epidemicMapper.selectById(id);
+        if ("1".equals(e.getSex())) {
+            e.setSex("男");
+        } else e.setSex("女");
+
+        return e;
     }
 
     @Override
@@ -136,7 +125,13 @@ public class EpidemicServiceImol implements EpidemicService {
 
     @Override
     public List<Epidemic> search(String searchkey, String stext) {
-        return epidemicMapper.search( searchkey,  stext);
+        List<Epidemic> epidemics = epidemicMapper.search(searchkey, stext);
+        for (Epidemic i : epidemics) {
+            if ("1".equals(i.getSex())) {
+                i.setSex("男");
+            } else i.setSex("女");
+        }
+        return epidemics;
     }
 
     @Override

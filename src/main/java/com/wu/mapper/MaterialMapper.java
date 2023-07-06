@@ -8,10 +8,10 @@ import java.util.List;
 @Mapper
 public interface MaterialMapper {
     @Select("select count(*) from material_manage")
-    long count ();
+    long count();
 
-    @Select("select * from material_manage limit #{start},#{pageSize};")
-    List<Material> findAll(Integer start, Integer pageSize);
+    /*@Select("select * from material_manage limit #{start},#{pageSize};")
+    List<Material> findAll(Integer start, Integer pageSize);*/
 
     @Insert("INSERT INTO material_manage (id , name , count , type , isImp , charge , cnum , updateTime) VALUES (#{id} , #{name} , #{count} , #{type} , #{isImp} , #{charge} , #{cnum} , #{updateTime} )")
     void insert(Material emp);
@@ -25,7 +25,7 @@ public interface MaterialMapper {
     @Delete("DELETE from material_manage WHERE id = #{id} ")
     void deleteById(long id);
 
-    @Select("select * from material_manage where ${searchkey} = #{stext}")
+    @Select("select * from material_manage where ${searchkey} like CONCAT('%',#{stext},'%')")
     List<Material> search(String searchkey, String stext);
 
     @Select("select * from material_manage")

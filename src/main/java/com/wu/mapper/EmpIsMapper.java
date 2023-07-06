@@ -11,8 +11,8 @@ public interface EmpIsMapper {
     @Select("select count(*) from quarantine")
     long count();
 
-    @Select("select * from quarantine limit #{start},#{pageSize};")
-    List<EmpIs> findAll(Integer start, Integer pageSize);
+    /*@Select("select * from quarantine limit #{start},#{pageSize};")
+    List<EmpIs> findAll(Integer start, Integer pageSize);*/
 
     @Insert("INSERT INTO quarantine (id ,name, sex, phone, temp, type, place, begin, end,leaved , arrived , content , depart) VALUES (#{id} ,#{name},#{sex},#{phone},#{temp},#{type},#{place},#{begin},#{end},#{leaved},#{arrived},#{content},#{depart}  )")
     void insert(EmpIs empis);
@@ -27,7 +27,7 @@ public interface EmpIsMapper {
     @Delete("DELETE from quarantine WHERE id = #{id} ")
     void deleteById(long id);
 
-    @Select("select * from quarantine where ${searchkey} = #{stext}")
+    @Select("select * from quarantine where ${searchkey} like CONCAT('%',#{stext},'%')")
     List<EmpIs> search(String searchkey, String stext);
 
     @Select("select * from quarantine")

@@ -10,10 +10,10 @@ import java.util.List;
 @Mapper
 public interface EpidemicMapper {
     @Select("select count(*) from epidemic")
-    long count ();
+    long count();
 
-    @Select("select * from epidemic limit #{start},#{pageSize};")
-    List<Epidemic> findAll(Integer start , Integer pageSize);
+    /*@Select("select * from epidemic limit #{start},#{pageSize};")
+    List<Epidemic> findAll(Integer start , Integer pageSize);*/
 
     @Insert("INSERT INTO epidemic (id ,name, sex, idcard,idate, place, phonenum,status , depart , register) VALUES (#{id},#{name}, #{sex}, #{idcard}, #{idate}, #{place}, #{phonenum}, #{status},#{depart}, #{register})")
     void insert(Epidemic emp);
@@ -30,7 +30,7 @@ public interface EpidemicMapper {
     @Delete("DELETE from epidemic WHERE id = #{id} ")
     void deleteById(Long id);
 
-    @Select("select * from epidemic where ${searchkey} = #{stext}")
+    @Select("select * from epidemic where ${searchkey} like CONCAT('%',#{stext},'%')")
     List<Epidemic> search(String searchkey, String stext);
 
     @Select("select * from material_manage")
