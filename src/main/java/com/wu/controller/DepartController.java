@@ -18,13 +18,6 @@ public class DepartController {
     private Result findAll() {
         return Result.success(service.getAll());
     }
-//
-//    @GetMapping("/list")
-//    public Page<Department> list(){
-//        Page<Department> page1= new Page<>(1, 20);
-//        Page<Department> result=mapper.selectPage(page1,null);
-//        return result;
-//    }
 
     @GetMapping("/selectById/{id}")
     public Result selectById(@PathVariable("id") Integer id){

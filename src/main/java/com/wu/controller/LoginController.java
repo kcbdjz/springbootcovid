@@ -38,19 +38,6 @@ public class LoginController {
         String message=userService.register(reUser);
         return message;
     }
-//    @GetMapping("/list")
-//    public Page<User> findAll(){
-//        /*Page<User> page1= new Page<>(1,100);
-//        Page<User> result0=mapper.selectPage(page1,null*//*,wrapper*//*);*/
-//        List<User> records = mapper.selectList(null);
-//        for (int i = 0; i < records.size(); i++) {
-//            records.get(i).setPassword(MD5Util.convertMD5(records.get(i).getPassword()));
-//        }
-//        Page<User> result = new Page<User>();
-//        result.setRecords(records);
-//
-//        return result;
-//    }
 
     @GetMapping("/selectById/{id}")
     public User findById(@PathVariable("id") Integer id){
