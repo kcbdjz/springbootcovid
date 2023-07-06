@@ -35,4 +35,7 @@ public interface EpidemicMapper {
 
     @Select("select * from material_manage")
     List<Material> selectList();
+
+    @Select("select * from epidemic")
+    List<Epidemic> list();
 }

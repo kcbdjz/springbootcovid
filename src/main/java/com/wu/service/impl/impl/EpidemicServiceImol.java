@@ -1,5 +1,7 @@
 package com.wu.service.impl.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.wu.mapper.EpidemicMapper;
 import com.wu.pojo.*;
 import com.wu.service.impl.EpidemicService;
@@ -18,7 +20,22 @@ public class EpidemicServiceImol implements EpidemicService {
     @Override
     public PageBean findAll(Integer page, Integer size) {
 
-        //      计算信息总数；
+        //设置分页参数
+        PageHelper.startPage(page, size);
+
+        //查询
+        List<Epidemic> empList = epidemicMapper.list();
+        for (Epidemic i : empList) {
+            if ("1".equals(i.getSex())) {
+                i.setSex("男");
+            } else i.setSex("女");
+        }
+        Page<Epidemic> p = (Page<Epidemic>) empList;
+        //封装到PageBean
+        PageBean pageBean = new PageBean(p.getTotal(), p.getResult());
+        return pageBean;
+
+        /*//      计算信息总数；
         long count = epidemicMapper.count();
 
         //        获取结果列表
@@ -32,7 +49,7 @@ public class EpidemicServiceImol implements EpidemicService {
         //        封装进pageBeam
         PageBean pageBean = new PageBean(count,list);
 
-        return pageBean;
+        return pageBean;*/
     }
 
     @Override

@@ -27,4 +27,7 @@ public interface MaterialMapper {
 
     @Select("select * from material_manage where ${searchkey} = #{stext}")
     List<Material> search(String searchkey, String stext);
+
+    @Select("select * from material_manage")
+    List<Material> list();
 }

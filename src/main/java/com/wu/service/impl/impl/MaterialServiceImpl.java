@@ -1,6 +1,9 @@
 package com.wu.service.impl.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.wu.mapper.MaterialMapper;
+import com.wu.pojo.Epidemic;
 import com.wu.pojo.Material;
 import com.wu.pojo.PageBean;
 import com.wu.service.impl.MaterialService;
@@ -19,6 +22,16 @@ public class MaterialServiceImpl implements MaterialService {
     @Override
     public PageBean findAll(Integer page, Integer size) {
 
+        //设置分页参数
+        PageHelper.startPage(page, size);
+
+        //查询
+        List<Material> empList = materialMapper.list();
+        Page<Material> p = (Page<Material>) empList;
+        //封装到PageBean
+        PageBean pageBean = new PageBean(p.getTotal(), p.getResult());
+        return pageBean;
+    /*
 //      计算信息总数；
         long count = materialMapper.count();
 
@@ -29,7 +42,7 @@ public class MaterialServiceImpl implements MaterialService {
 //        封装进pageBeam
         PageBean pageBean = new PageBean(count,list);
 
-        return pageBean;
+        return pageBean;*/
     }
 
     @Override

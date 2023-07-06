@@ -10,9 +10,6 @@ public interface EmpMapper {
     @Select("select count(*) from health_check_in")
     long count ();
 
-    @Select("select * from health_check_in limit #{start},#{pageSize};")
-    List<HealthCheckIn> findAll(Integer start , Integer pageSize);
-
     @Insert("INSERT INTO health_check_in (name, sex, phonenum, temp, risk, health, content, depart,createTime) VALUES (#{name}, #{sex}, #{phonenum}, #{temp}, #{risk}, #{health}, #{content}, #{depart},#{createTime})")
     void insert(HealthCheckIn emp);
     @Select("select * from health_check_in where id = #{id}")
@@ -26,4 +23,7 @@ public interface EmpMapper {
 
     @Select("select * from health_check_in where ${searchkey} = #{stext}")
     List<HealthCheckIn> search(String searchkey, String stext);
+
+    @Select("select * from health_check_in")
+    List<HealthCheckIn> list();
 }

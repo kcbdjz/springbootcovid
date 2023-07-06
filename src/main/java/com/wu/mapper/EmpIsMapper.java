@@ -29,4 +29,7 @@ public interface EmpIsMapper {
 
     @Select("select * from quarantine where ${searchkey} = #{stext}")
     List<EmpIs> search(String searchkey, String stext);
+
+    @Select("select * from quarantine")
+    List<EmpIs> list();
 }

@@ -19,16 +19,22 @@ public class DepartController {
         return Result.success(service.getAll());
     }
 
+    @GetMapping("/list")
+    public Result list() {
+        List<Department> pageBean = service.list();
+        return Result.success(pageBean);
+    }
+
     @GetMapping("/selectById/{id}")
-    public Result selectById(@PathVariable("id") Integer id){
+    public Result selectById(@PathVariable("id") Integer id) {
 
         return Result.success(service.selectById(id));
     }
 
     @PostMapping("/update")
-    public String update(@RequestBody Department department){
-        int result=service.updateById(department);
-        if (result==1){
+    public String update(@RequestBody Department department) {
+        int result = service.updateById(department);
+        if (result == 1) {
             return "success";
         }else {
             return "error";

@@ -1,5 +1,7 @@
 package com.wu.service.impl.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.wu.mapper.EmpIsMapper;
 import com.wu.pojo.EmpIs;
 import com.wu.pojo.HealthCheckIn;
@@ -18,8 +20,22 @@ public class EmpIsServiceImpl implements EmpIsService {
 
     @Override
     public PageBean findAll(Integer page, Integer size) {
+        //设置分页参数
+        PageHelper.startPage(page, size);
 
-//      计算信息总数；
+        //查询
+        List<EmpIs> empList = empIsMapper.list();
+        for (EmpIs i : empList) {
+            if ("1".equals(i.getSex())) {
+                i.setSex("男");
+            } else i.setSex("女");
+        }
+        Page<EmpIs> p = (Page<EmpIs>) empList;
+        //封装到PageBean
+        PageBean pageBean = new PageBean(p.getTotal(), p.getResult());
+        return pageBean;
+
+/*//      计算信息总数；
         long count = empIsMapper.count();
 
 //        获取结果列表
@@ -34,7 +50,7 @@ public class EmpIsServiceImpl implements EmpIsService {
 //        封装进pageBeam
         PageBean pageBean = new PageBean(count,list);
 
-        return pageBean;
+        return pageBean;*/
     }
 
     @Override

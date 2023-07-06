@@ -1,8 +1,12 @@
 package com.wu.service.impl.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.wu.mapper.DepartMapper;
 import com.wu.pojo.Department;
+import com.wu.pojo.EmpIs;
 import com.wu.pojo.HealthCheckIn;
+import com.wu.pojo.PageBean;
 import com.wu.service.impl.DepartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,14 +30,23 @@ public class DepartServiceImpl implements DepartService {
         }
         return name;
     }
+
     @Override
     public int insert(Department emp) {
         try {
             departMapper.insert(emp);
-        }catch (Exception exception){
+        } catch (Exception exception) {
             return 0;
         }
         return 1;
+    }
+
+    @Override
+    public List<Department> list() {
+        //查询
+        List<Department> empList = departMapper.selectList();
+
+        return empList;
     }
 
     @Override
