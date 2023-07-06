@@ -27,29 +27,30 @@ public class MaterialServiceImpl implements MaterialService {
 
         //查询
         List<Material> empList = materialMapper.list();
+        for (Material material : empList) {
+            if ("1".equals(material.getIsImp())) {
+                material.setIsImp("是");
+            } else {
+                material.setIsImp("否");
+            }
+        }
         Page<Material> p = (Page<Material>) empList;
         //封装到PageBean
         PageBean pageBean = new PageBean(p.getTotal(), p.getResult());
         return pageBean;
-    /*
-//      计算信息总数；
-        long count = materialMapper.count();
-
-//        获取结果列表
-        Integer start = page * size;
-        List<Material> list = materialMapper.findAll(start, size);
-
-//        封装进pageBeam
-        PageBean pageBean = new PageBean(count,list);
-
-        return pageBean;*/
     }
 
     @Override
     public int insert(Material emp) {
         emp.setUpdateTime(new Date());
         try {
+            if ("是".equals(emp.getIsImp())) {
+                emp.setIsImp("1");
+            } else {
+                emp.setIsImp("0");
+            }
             materialMapper.insert(emp);
+
         } catch (Exception exception) {
             return 0;
         }
@@ -59,6 +60,11 @@ public class MaterialServiceImpl implements MaterialService {
     @Override
     public Material selectById(Integer id) {
         Material emp = materialMapper.selectById(id);
+        if ("1".equals(emp.getIsImp())) {
+            emp.setIsImp("是");
+        } else {
+            emp.setIsImp("否");
+        }
         return emp;
     }
 
@@ -66,6 +72,11 @@ public class MaterialServiceImpl implements MaterialService {
     public int updateById(Material emp) {
 
         try {
+            if ("是".equals(emp.getIsImp())) {
+                emp.setIsImp("1");
+            } else {
+                emp.setIsImp("0");
+            }
             materialMapper.updateById(emp);
         } catch (Exception exception) {
             return 0;
@@ -80,7 +91,15 @@ public class MaterialServiceImpl implements MaterialService {
 
     @Override
     public List<Material> search(String searchkey, String stext) {
-        return materialMapper.search(searchkey, stext);
+        List<Material> list = materialMapper.search(searchkey, stext);
+        for (Material material : list) {
+            if ("1".equals(material.getIsImp())) {
+                material.setIsImp("是");
+            } else {
+                material.setIsImp("否");
+            }
+        }
+        return list;
     }
 
 }
