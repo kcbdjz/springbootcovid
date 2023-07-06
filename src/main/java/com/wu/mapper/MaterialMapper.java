@@ -19,7 +19,8 @@ public interface MaterialMapper {
     @Select("select * from material_manage where id = #{id}")
     Material selectById(Integer id);
 
-    @Update("UPDATE material_manage  SET name = #{id} , count= #{id} , type= #{id} ,isImp= #{id} , charge= #{id} , cnum= #{id} , updateTime = #{updateTime}, updateTimeWHERE id = #{id}")
+    @Update("UPDATE material_manage  SET name = #{name} , count= #{count} , type= #{type} ,isImp= #{isImp} , charge= #{charge} , cnum= #{cnum} , updateTime = #{updateTime} " +
+            "WHERE id = #{id}")
     void updateById(Material emp);
 
     @Delete("DELETE from material_manage WHERE id = #{id} ")

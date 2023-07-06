@@ -70,7 +70,7 @@ public class MaterialServiceImpl implements MaterialService {
 
     @Override
     public int updateById(Material emp) {
-
+        emp.setUpdateTime(new Date());
         try {
             if ("是".equals(emp.getIsImp())) {
                 emp.setIsImp("1");
